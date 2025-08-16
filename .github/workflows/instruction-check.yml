@@ -1,0 +1,140 @@
+name: Instruction Folder Validation
+
+on:
+  pull_request:
+    paths:
+      - 'dev-status/**'
+  push:
+    branches: [main]
+    paths:
+      - 'dev-status/**'
+
+jobs:
+  validate-instruction-folders:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Validate instruction folder structure
+      run: |
+        echo "🔍 Validating instruction folder structure..."
+        
+        # Check if dev-status directory exists
+        if [ ! -d "dev-status" ]; then
+          echo "❌ dev-status directory not found"
+          exit 1
+        fi
+        
+        # Find all instruction directories (YYYY-MM-DD-* pattern)
+        INSTRUCTION_DIRS=$(find dev-status -maxdepth 1 -type d -name "20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*" | sort)
+        
+        if [ -z "$INSTRUCTION_DIRS" ]; then
+          echo "ℹ️  No instruction directories found"
+          exit 0
+        fi
+        
+        echo "📂 Found instruction directories:"
+        echo "$INSTRUCTION_DIRS"
+        echo ""
+        
+        # Validate each instruction directory
+        VALIDATION_FAILED=false
+        
+        for dir in $INSTRUCTION_DIRS; do
+          echo "🔍 Validating: $dir"
+          
+          # Check required files according to CLAUDE.md
+          REQUIRED_FILES=("README.md" "progress.md" "issues.md")
+          
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$dir/$file" ]; then
+              echo "❌ Missing required file: $dir/$file"
+              VALIDATION_FAILED=true
+            else
+              echo "✅ Found: $dir/$file"
+            fi
+          done
+          
+          # Check if files are in Japanese (basic check for Japanese characters)
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ -f "$dir/$file" ]; then
+              if grep -q '[あ-ん]|[ア-ン]|[一-龯]' "$dir/$file" 2>/dev/null; then
+                echo "✅ $dir/$file contains Japanese content"
+              else
+                # More lenient check for any non-ASCII characters (Japanese)
+                if file "$dir/$file" | grep -q "UTF-8" && [ $(wc -c < "$dir/$file") -gt 100 ]; then
+                  echo "✅ $dir/$file appears to have Japanese content"
+                else
+                  echo "⚠️  $dir/$file may not contain sufficient Japanese content"
+                fi
+              fi
+            fi
+          done
+          
+          echo ""
+        done
+        
+        if [ "$VALIDATION_FAILED" = true ]; then
+          echo "❌ Instruction folder validation failed"
+          echo ""
+          echo "📋 CLAUDE.md Requirements:"
+          echo "Each instruction directory must contain:"
+          echo "- README.md - Main instruction summary and status (Japanese)"
+          echo "- progress.md - Detailed progress tracking (Japanese)"
+          echo "- issues.md - Problems encountered and solutions (Japanese)"
+          exit 1
+        else
+          echo "✅ All instruction folders are properly structured"
+        fi
+        
+    - name: Check templates directory
+      run: |
+        echo "🔍 Checking templates directory..."
+        
+        if [ -d "dev-status/templates" ]; then
+          echo "✅ Templates directory found"
+          
+          TEMPLATE_FILES=("README-template.md" "progress-template.md" "issues-template.md")
+          
+          for file in "${TEMPLATE_FILES[@]}"; do
+            if [ -f "dev-status/templates/$file" ]; then
+              echo "✅ Found template: dev-status/templates/$file"
+            else
+              echo "⚠️  Missing template: dev-status/templates/$file"
+            fi
+          done
+        else
+          echo "⚠️  Templates directory not found at dev-status/templates"
+        fi
+        
+    - name: Generate validation report
+      run: |
+        echo "📊 Instruction Folder Validation Report" > validation-report.md
+        echo "=======================================" >> validation-report.md
+        echo "" >> validation-report.md
+        echo "**Validation Date**: $(date)" >> validation-report.md
+        echo "**Commit**: ${{ github.sha }}" >> validation-report.md
+        echo "" >> validation-report.md
+        
+        INSTRUCTION_COUNT=$(find dev-status -maxdepth 1 -type d -name "20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*" | wc -l)
+        echo "**Instruction Directories Found**: $INSTRUCTION_COUNT" >> validation-report.md
+        echo "" >> validation-report.md
+        
+        if [ $INSTRUCTION_COUNT -gt 0 ]; then
+          echo "**Validated Directories**:" >> validation-report.md
+          find dev-status -maxdepth 1 -type d -name "20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*" | sort | while read dir; do
+            echo "- \`$dir\`" >> validation-report.md
+          done
+        fi
+        
+        echo "" >> validation-report.md
+        echo "✅ All validations passed" >> validation-report.md
+        
+    - name: Upload validation report
+      uses: actions/upload-artifact@v4
+      with:
+        name: instruction-validation-report
+        path: validation-report.md
+        retention-days: 30

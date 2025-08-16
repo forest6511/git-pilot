@@ -1,0 +1,115 @@
+name: Release Gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        type: string
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release-verification:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run TypeScript type check
+      run: npm run typecheck
+      
+    - name: Run linting (strict)
+      run: npm run lint
+      
+    - name: Run brand name check (strict)
+      run: npm run verify:brands
+      
+    - name: Run rules verification (RELEASE MODE - strict)
+      run: RELEASE=1 npm run verify:rules
+      env:
+        RELEASE: 1
+        
+    - name: Run unit tests with coverage
+      run: npm run test:unit
+      
+    - name: Check test coverage threshold
+      run: |
+        COVERAGE=$(npm run test:unit 2>/dev/null | grep -o "Statements.*%" | grep -o "[0-9.]*" | head -1)
+        echo "Current coverage: ${COVERAGE}%"
+        if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+          echo "❌ Coverage $COVERAGE% is below required 70%"
+          exit 1
+        else
+          echo "✅ Coverage $COVERAGE% meets requirement"
+        fi
+        
+    - name: Build production
+      run: npm run build
+      
+    - name: Package extension
+      run: npm run package
+      
+    - name: Verify package structure
+      run: |
+        if [ ! -f *.vsix ]; then
+          echo "❌ VSIX package not found"
+          exit 1
+        fi
+        echo "✅ VSIX package created successfully"
+        
+    - name: Run final verification
+      run: |
+        echo "🔍 Running final release verification..."
+        echo "✅ All TypeScript checks passed"
+        echo "✅ All linting checks passed"
+        echo "✅ Brand name verification passed"
+        echo "✅ RELEASE mode rules verification passed"
+        echo "✅ Unit tests passed with required coverage"
+        echo "✅ Build completed successfully"
+        echo "✅ Package created successfully"
+        echo "🎉 Ready for release!"
+        
+  create-release:
+    runs-on: ubuntu-latest
+    needs: release-verification
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build and package
+      run: |
+        npm run build
+        npm run package
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: '*.vsix'
+        generate_release_notes: true
+        draft: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,1062 @@
+{
+  "name": "git-pilot",
+  "displayName": "GitPilot",
+  "description": "Lightweight Git navigator for VSCode",
+  "version": "0.0.1",
+  "publisher": "forest6511",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "git-pilot.commit",
+        "title": "$(git-commit) Commit...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.push",
+        "title": "$(arrow-up) Push",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.pull",
+        "title": "$(arrow-down) Pull",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.showHistory",
+        "title": "$(history) Show History",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.branches",
+        "title": "$(git-branch) Branches...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.stash",
+        "title": "$(save) Stash Changes...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.showFileDiff",
+        "title": "Show Diff",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "git-pilot.showHistoryForSelection",
+        "title": "Show History for Selection",
+        "icon": "$(history)"
+      },
+      {
+        "command": "git-pilot.addToVCS",
+        "title": "Add to VCS",
+        "icon": "$(add)"
+      },
+      {
+        "command": "git-pilot.revert",
+        "title": "Revert...",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "git-pilot.commitFile",
+        "title": "Commit File...",
+        "icon": "$(git-commit)"
+      },
+      {
+        "command": "git-pilot.rollbackFile",
+        "title": "Rollback...",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "git-pilot.blameFile",
+        "title": "Annotate with Git Blame",
+        "icon": "$(history)"
+      },
+      {
+        "command": "git-pilot.compareWithBranch",
+        "title": "Compare with Branch...",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "git-pilot.createPatch",
+        "title": "Create Patch...",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "git-pilot.shelveChanges",
+        "title": "Shelve Changes...",
+        "icon": "$(save)"
+      },
+      {
+        "command": "git-pilot.showAllDiff",
+        "title": "Show Diff",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "git-pilot.revertAll",
+        "title": "Revert",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "git-pilot.selectAllFiles",
+        "title": "Select All",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "git-pilot.deselectAllFiles",
+        "title": "Deselect All",
+        "icon": "$(close-all)"
+      },
+      {
+        "command": "git-pilot.stageSelected",
+        "title": "Stage Selected",
+        "icon": "$(add)"
+      },
+      {
+        "command": "git-pilot.unstageSelected",
+        "title": "Unstage Selected",
+        "icon": "$(remove)"
+      },
+      {
+        "command": "git-pilot.createChangelist",
+        "title": "$(file-add) New Changelist...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "git-pilot.deleteChangelist",
+        "title": "Delete Changelist",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "git-pilot.renameChangelist",
+        "title": "Rename Changelist",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "git-pilot.setActiveChangelist",
+        "title": "Set as Active",
+        "icon": "$(check)"
+      },
+      {
+        "command": "git-pilot.moveFilesToChangelist",
+        "title": "Move to Changelist...",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "git-pilot.showChangelistInfo",
+        "title": "Changelist Info",
+        "icon": "$(info)"
+      },
+      {
+        "command": "git-pilot.stageChangelistFiles",
+        "title": "Stage Selected Files",
+        "icon": "$(add)"
+      },
+      {
+        "command": "git-pilot.unstageChangelistFiles",
+        "title": "Unstage Selected Files",
+        "icon": "$(remove)"
+      },
+      {
+        "command": "git-pilot.selectAllChangelistFiles",
+        "title": "Select All Files",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "git-pilot.deselectAllChangelistFiles",
+        "title": "Deselect All Files",
+        "icon": "$(close-all)"
+      },
+      {
+        "command": "gitpilot.changelist.refresh",
+        "title": "$(refresh) Refresh Changelists",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.changelist.addCurrentFile",
+        "title": "$(file-add) Add Current File to Changelist...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.changelist.moveFileToChangelist",
+        "title": "Move to Another Changelist...",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "gitpilot.changelist.removeFile",
+        "title": "Remove from Changelist",
+        "icon": "$(remove)"
+      },
+      {
+        "command": "gitpilot.changelist.showDetails",
+        "title": "Show Details",
+        "icon": "$(info)"
+      },
+      {
+        "command": "gitpilot.shelf.create",
+        "title": "$(archive) Create Shelf...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.shelf.createFromChangelist",
+        "title": "$(archive) Shelf Changes...",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "gitpilot.shelf.unshelve",
+        "title": "Unshelve Changes",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "gitpilot.shelf.unshelveKeep",
+        "title": "Unshelve and Keep Shelf",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "gitpilot.shelf.delete",
+        "title": "Delete Shelf",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "gitpilot.shelf.rename",
+        "title": "Rename Shelf",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "gitpilot.shelf.preview",
+        "title": "Preview Conflicts",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "gitpilot.shelf.previewFile",
+        "title": "Preview File",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "gitpilot.shelf.export",
+        "title": "Export as Patch",
+        "icon": "$(export)"
+      },
+      {
+        "command": "gitpilot.shelf.import",
+        "title": "$(import) Import Shelf...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.openCommitDialog",
+        "title": "$(git-commit) Open Commit Dialog",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.changelist.switch",
+        "title": "$(list-selection) Switch Changelist...",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.quickCommit",
+        "title": "$(git-commit) Quick Commit (No Dialog)",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.updateProject",
+        "title": "$(sync) Update Project from Remote",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.shelf.showDetails",
+        "title": "Show Details",
+        "icon": "$(info)"
+      },
+      {
+        "command": "gitpilot.shelf.partialUnshelve",
+        "title": "Unshelve Selected Files...",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "gitpilot.shelf.refresh",
+        "title": "$(refresh) Refresh Shelves",
+        "category": "GitPilot"
+      },
+      {
+        "command": "gitpilot.explorer.stage",
+        "title": "Stage File",
+        "icon": "$(add)"
+      },
+      {
+        "command": "gitpilot.explorer.unstage",
+        "title": "Unstage File",
+        "icon": "$(remove)"
+      },
+      {
+        "command": "gitpilot.explorer.addToGit",
+        "title": "Add to Git",
+        "icon": "$(plus)"
+      },
+      {
+        "command": "gitpilot.explorer.revert",
+        "title": "Revert Changes",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "gitpilot.explorer.diff",
+        "title": "Show Diff",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "gitpilot.explorer.compareWithBranch",
+        "title": "Compare with Branch...",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "gitpilot.explorer.history",
+        "title": "Show File History",
+        "icon": "$(history)"
+      },
+      {
+        "command": "gitpilot.explorer.blame",
+        "title": "Annotate with Git Blame",
+        "icon": "$(person)"
+      },
+      {
+        "command": "gitpilot.explorer.addToChangelist",
+        "title": "Add to Changelist...",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "gitpilot.explorer.shelve",
+        "title": "Shelve Changes...",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "gitpilot.explorer.stageFolder",
+        "title": "Stage Folder",
+        "icon": "$(add)"
+      },
+      {
+        "command": "gitpilot.explorer.addFolderToChangelist",
+        "title": "Add Folder to Changelist...",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "gitpilot.explorer.shelveFolder",
+        "title": "Shelve Folder...",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "gitpilot.editor.showLineBlame",
+        "title": "Show Line Blame",
+        "icon": "$(person)"
+      },
+      {
+        "command": "gitpilot.editor.showLineHistory",
+        "title": "Show Line History",
+        "icon": "$(history)"
+      },
+      {
+        "command": "gitpilot.editor.revertSelectedLines",
+        "title": "Revert Selected Lines",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "gitpilot.editor.stageSelectedLines",
+        "title": "Stage Selected Lines",
+        "icon": "$(add)"
+      },
+      {
+        "command": "gitpilot.editor.copyPermalink",
+        "title": "Copy Permalink",
+        "icon": "$(link)"
+      },
+      {
+        "command": "gitpilot.editor.compareWithBase",
+        "title": "Compare with HEAD",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "gitpilot.editor.showCommitForLine",
+        "title": "Show Commit for Line",
+        "icon": "$(git-commit)"
+      },
+      {
+        "command": "gitpilot.editor.addSelectionToChangelist",
+        "title": "Add Selection to Changelist...",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "gitpilot.editor.showFileBlame",
+        "title": "Show File Blame",
+        "icon": "$(person)"
+      },
+      {
+        "command": "gitpilot.editor.showFileHistory",
+        "title": "Show File History",
+        "icon": "$(history)"
+      },
+      {
+        "command": "gitpilot.editor.compareFileWithBranch",
+        "title": "Compare File with Branch...",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "gitpilot.editor.toggleBlame",
+        "title": "Toggle Blame Annotations",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "gitpilot.editor.toggleGutterDecorations",
+        "title": "Toggle Git Gutter Decorations",
+        "icon": "$(symbol-color)"
+      },
+      {
+        "command": "gitpilot.stash.quick",
+        "title": "Quick Stash",
+        "category": "GitPilot",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "gitpilot.stash.list",
+        "title": "List Stashes",
+        "category": "GitPilot",
+        "icon": "$(list-unordered)"
+      },
+      {
+        "command": "gitpilot.branches.create",
+        "title": "Create Branch",
+        "category": "GitPilot",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "gitpilot.branches.switch",
+        "title": "Switch Branch",
+        "category": "GitPilot",
+        "icon": "$(arrow-swap)"
+      },
+      {
+        "command": "gitpilot.branches.delete",
+        "title": "Delete Branch",
+        "category": "GitPilot",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "gitpilot.config.show",
+        "title": "GitPilot Configuration",
+        "category": "GitPilot",
+        "icon": "$(gear)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "gitpilot-sidebar",
+          "title": "GitPilot",
+          "icon": "$(git-branch)"
+        }
+      ]
+    },
+    "views": {
+      "gitpilot-sidebar": [
+        {
+          "id": "gitpilot.localChanges",
+          "name": "Local Changes",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.commit",
+          "name": "Commit",
+          "type": "webview",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.actions",
+          "name": "Git Operations",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.multipleChangelists",
+          "name": "Multiple Changelists",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.shelves",
+          "name": "Shelves",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.branches",
+          "name": "Branches",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        },
+        {
+          "id": "gitpilot.history",
+          "name": "History",
+          "type": "webview",
+          "visibility": "visible",
+          "contextualTitle": "GitPilot"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "git-pilot.createChangelist",
+          "when": "view == gitpilot.localChanges",
+          "group": "navigation"
+        },
+        {
+          "command": "gitpilot.changelist.refresh",
+          "when": "view == gitpilot.multipleChangelists",
+          "group": "navigation"
+        },
+        {
+          "command": "git-pilot.createChangelist",
+          "when": "view == gitpilot.multipleChangelists",
+          "group": "navigation"
+        },
+        {
+          "command": "gitpilot.shelf.refresh",
+          "when": "view == gitpilot.shelves",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitpilot.shelf.create",
+          "when": "view == gitpilot.shelves",
+          "group": "navigation@2"
+        },
+        {
+          "command": "gitpilot.shelf.import",
+          "when": "view == gitpilot.shelves",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "git-pilot.showFileDiff",
+          "when": "viewItem == gitFile",
+          "group": "1_diff@1"
+        },
+        {
+          "command": "git-pilot.showHistoryForSelection",
+          "when": "viewItem == gitFile",
+          "group": "1_diff@2"
+        },
+        {
+          "command": "git-pilot.addToVCS",
+          "when": "viewItem == untrackedFile",
+          "group": "2_vcs@1"
+        },
+        {
+          "command": "git-pilot.stageSelected",
+          "when": "viewItem == modifiedFile",
+          "group": "2_vcs@2"
+        },
+        {
+          "command": "git-pilot.unstageSelected",
+          "when": "viewItem == stagedFile",
+          "group": "2_vcs@3"
+        },
+        {
+          "command": "git-pilot.revert",
+          "when": "viewItem == modifiedFile || viewItem == stagedFile",
+          "group": "2_vcs@4"
+        },
+        {
+          "command": "git-pilot.commitFile",
+          "when": "viewItem == gitFile",
+          "group": "3_commit@1"
+        },
+        {
+          "command": "git-pilot.rollbackFile",
+          "when": "viewItem == gitFile",
+          "group": "3_commit@2"
+        },
+        {
+          "command": "git-pilot.blameFile",
+          "when": "viewItem == gitFile",
+          "group": "4_history@1"
+        },
+        {
+          "command": "git-pilot.compareWithBranch",
+          "when": "viewItem == gitFile",
+          "group": "4_history@2"
+        },
+        {
+          "command": "git-pilot.selectAllFiles",
+          "when": "viewItem == changelist",
+          "group": "1_changelist@1"
+        },
+        {
+          "command": "git-pilot.deselectAllFiles",
+          "when": "viewItem == changelist",
+          "group": "1_changelist@2"
+        },
+        {
+          "command": "git-pilot.stageSelected",
+          "when": "viewItem == changelist",
+          "group": "1_changelist@3"
+        },
+        {
+          "command": "git-pilot.commit",
+          "when": "viewItem == changelist",
+          "group": "2_changelist@1"
+        },
+        {
+          "command": "git-pilot.createPatch",
+          "when": "viewItem == changelist",
+          "group": "2_changelist@2"
+        },
+        {
+          "command": "git-pilot.shelveChanges",
+          "when": "viewItem == changelist",
+          "group": "2_changelist@3"
+        },
+        {
+          "command": "git-pilot.showAllDiff",
+          "when": "viewItem == changelist",
+          "group": "3_changelist@1"
+        },
+        {
+          "command": "git-pilot.revertAll",
+          "when": "viewItem == changelist",
+          "group": "3_changelist@2"
+        },
+        {
+          "command": "git-pilot.showChangelistInfo",
+          "when": "viewItem == changelist || viewItem == defaultChangelist",
+          "group": "2_changelist@1"
+        },
+        {
+          "command": "git-pilot.selectAllChangelistFiles",
+          "when": "viewItem == changelist || viewItem == defaultChangelist",
+          "group": "3_changelist@1"
+        },
+        {
+          "command": "git-pilot.deselectAllChangelistFiles",
+          "when": "viewItem == changelist || viewItem == defaultChangelist",
+          "group": "3_changelist@2"
+        },
+        {
+          "command": "git-pilot.stageChangelistFiles",
+          "when": "viewItem == changelist || viewItem == defaultChangelist",
+          "group": "3_changelist@3"
+        },
+        {
+          "command": "git-pilot.unstageChangelistFiles",
+          "when": "viewItem == changelist || viewItem == defaultChangelist",
+          "group": "3_changelist@4"
+        },
+        {
+          "command": "git-pilot.moveFilesToChangelist",
+          "when": "viewItem =~ /.*\\.inChangelist$/",
+          "group": "4_file@1"
+        },
+
+        {
+          "command": "gitpilot.changelist.showDetails",
+          "when": "viewItem == activeChangelist || viewItem == changelist",
+          "group": "2_changelist@1"
+        },
+        {
+          "command": "gitpilot.changelist.removeFile",
+          "when": "viewItem == changelistFile",
+          "group": "1_file@1"
+        },
+        {
+          "command": "gitpilot.changelist.moveFileToChangelist",
+          "when": "viewItem == changelistFile",
+          "group": "1_file@2"
+        },
+        {
+          "command": "git-pilot.showFileDiff",
+          "when": "viewItem == changelistFile",
+          "group": "2_file@1"
+        },
+        {
+          "command": "gitpilot.shelf.unshelve",
+          "when": "viewItem == shelf",
+          "group": "1_shelf@1"
+        },
+        {
+          "command": "gitpilot.shelf.unshelveKeep",
+          "when": "viewItem == shelf",
+          "group": "1_shelf@2"
+        },
+        {
+          "command": "gitpilot.shelf.partialUnshelve",
+          "when": "viewItem == shelf",
+          "group": "1_shelf@3"
+        },
+        {
+          "command": "gitpilot.shelf.preview",
+          "when": "viewItem == shelf",
+          "group": "2_shelf@1"
+        },
+        {
+          "command": "gitpilot.shelf.showDetails",
+          "when": "viewItem == shelf",
+          "group": "2_shelf@2"
+        },
+        {
+          "command": "gitpilot.shelf.rename",
+          "when": "viewItem == shelf",
+          "group": "3_shelf@1"
+        },
+        {
+          "command": "gitpilot.shelf.export",
+          "when": "viewItem == shelf",
+          "group": "3_shelf@2"
+        },
+        {
+          "command": "gitpilot.shelf.delete",
+          "when": "viewItem == shelf",
+          "group": "4_shelf@1"
+        },
+        {
+          "command": "gitpilot.shelf.previewFile",
+          "when": "viewItem == shelvedFile",
+          "group": "1_shelvedFile@1"
+        },
+        {
+          "command": "gitpilot.shelf.createFromChangelist",
+          "when": "viewItem == changelist",
+          "group": "2_changelist@4"
+        }
+      ],
+      "explorer/context": [
+        {
+          "submenu": "gitpilot.explorer.menu",
+          "group": "7_modification",
+          "when": "explorerResourceIsFolder == false && resourceScheme == file"
+        },
+        {
+          "command": "gitpilot.explorer.stageFolder",
+          "when": "explorerResourceIsFolder && resourceScheme == file",
+          "group": "7_modification@1"
+        },
+        {
+          "command": "gitpilot.explorer.addFolderToChangelist",
+          "when": "explorerResourceIsFolder && resourceScheme == file",
+          "group": "7_modification@2"
+        },
+        {
+          "command": "gitpilot.explorer.shelveFolder",
+          "when": "explorerResourceIsFolder && resourceScheme == file",
+          "group": "7_modification@3"
+        }
+      ],
+      "gitpilot.explorer.menu": [
+        {
+          "command": "gitpilot.explorer.stage",
+          "when": "resourceScheme == file",
+          "group": "1_basic@1"
+        },
+        {
+          "command": "gitpilot.explorer.unstage",
+          "when": "resourceScheme == file",
+          "group": "1_basic@2"
+        },
+        {
+          "command": "gitpilot.explorer.addToGit",
+          "when": "resourceScheme == file",
+          "group": "1_basic@3"
+        },
+        {
+          "command": "gitpilot.explorer.diff",
+          "when": "resourceScheme == file",
+          "group": "2_compare@1"
+        },
+        {
+          "command": "gitpilot.explorer.compareWithBranch",
+          "when": "resourceScheme == file",
+          "group": "2_compare@2"
+        },
+        {
+          "command": "gitpilot.explorer.history",
+          "when": "resourceScheme == file",
+          "group": "3_history@1"
+        },
+        {
+          "command": "gitpilot.explorer.blame",
+          "when": "resourceScheme == file",
+          "group": "3_history@2"
+        },
+        {
+          "command": "gitpilot.explorer.revert",
+          "when": "resourceScheme == file",
+          "group": "4_changes@1"
+        },
+        {
+          "command": "gitpilot.explorer.addToChangelist",
+          "when": "resourceScheme == file",
+          "group": "5_organize@1"
+        },
+        {
+          "command": "gitpilot.explorer.shelve",
+          "when": "resourceScheme == file",
+          "group": "5_organize@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "gitpilot.editor.menu",
+          "group": "1_modification",
+          "when": "resourceScheme == file"
+        }
+      ],
+      "gitpilot.editor.menu": [
+        {
+          "command": "gitpilot.editor.showLineBlame",
+          "when": "resourceScheme == file",
+          "group": "1_view@1"
+        },
+        {
+          "command": "gitpilot.editor.showLineHistory",
+          "when": "resourceScheme == file",
+          "group": "1_view@2"
+        },
+        {
+          "command": "gitpilot.editor.compareWithBase",
+          "when": "resourceScheme == file",
+          "group": "1_view@3"
+        },
+        {
+          "command": "gitpilot.editor.stageSelectedLines",
+          "when": "resourceScheme == file && editorHasSelection",
+          "group": "2_stage@1"
+        },
+        {
+          "command": "gitpilot.editor.revertSelectedLines",
+          "when": "resourceScheme == file && editorHasSelection",
+          "group": "2_stage@2"
+        },
+        {
+          "command": "gitpilot.editor.addSelectionToChangelist",
+          "when": "resourceScheme == file && editorHasSelection",
+          "group": "3_organize@1"
+        },
+        {
+          "command": "gitpilot.editor.copyPermalink",
+          "when": "resourceScheme == file",
+          "group": "4_misc@1"
+        },
+        {
+          "command": "gitpilot.editor.showCommitForLine",
+          "when": "resourceScheme == file",
+          "group": "4_misc@2"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "gitpilot.editor.showFileBlame",
+          "when": "resourceScheme == file",
+          "group": "1_git@1"
+        },
+        {
+          "command": "gitpilot.editor.showFileHistory",
+          "when": "resourceScheme == file",
+          "group": "1_git@2"
+        },
+        {
+          "command": "gitpilot.editor.compareFileWithBranch",
+          "when": "resourceScheme == file",
+          "group": "1_git@3"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "gitpilot.explorer.menu",
+        "label": "Git Operations"
+      },
+      {
+        "id": "gitpilot.editor.menu",
+        "label": "Git Operations"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "gitpilot.openCommitDialog",
+        "key": "ctrl+k",
+        "mac": "cmd+k",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.commit",
+        "key": "ctrl+shift+k",
+        "mac": "cmd+shift+k",
+        "when": "view == gitpilot.localChanges"
+      },
+      {
+        "command": "git-pilot.pull",
+        "key": "ctrl+t",
+        "mac": "cmd+t",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.push",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "gitpilot.changelist.switch",
+        "key": "alt+shift+c",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.createChangelist",
+        "key": "alt+shift+n",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.selectAllFiles",
+        "key": "ctrl+a",
+        "mac": "cmd+a",
+        "when": "view == gitpilot.localChanges && focusedView == gitpilot.localChanges"
+      },
+      {
+        "command": "git-pilot.stageSelected",
+        "key": "ctrl+enter",
+        "mac": "cmd+enter",
+        "when": "view == gitpilot.localChanges"
+      },
+      {
+        "command": "gitpilot.changelist.addCurrentFile",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "editorFocus"
+      },
+      {
+        "command": "gitpilot.shelf.create",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.showHistory",
+        "key": "ctrl+h",
+        "mac": "cmd+h",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.branches",
+        "key": "ctrl+b",
+        "mac": "cmd+b",
+        "when": "!inQuickOpen && !terminalFocus"
+      },
+      {
+        "command": "git-pilot.refresh",
+        "key": "f5",
+        "when": "view == gitpilot.localChanges || view == gitpilot.shelves"
+      },
+      {
+        "command": "git-pilot.showFileDiff",
+        "key": "ctrl+d",
+        "mac": "cmd+d",
+        "when": "view == gitpilot.localChanges && focusedView == gitpilot.localChanges"
+      },
+      {
+        "command": "workbench.action.closeActiveEditor",
+        "key": "escape",
+        "when": "activeWebviewPanelId == 'gitpilotCommitDialog'"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "gitpilot.actions",
+        "contents": "No Git repository found.\n[Open Folder](command:vscode.openFolder)\n[Clone Repository](command:git-pilot.clone)"
+      }
+    ],
+    "configuration": {
+      "title": "GitPilot",
+      "properties": {
+        "gitpilot.editor.showGutterDecorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Git change decorations in the editor gutter"
+        },
+        "gitpilot.editor.showInlineBlame": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show inline blame annotations by default"
+        },
+        "gitpilot.editor.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Git CodeLens for showing blame and history information"
+        },
+        "gitpilot.editor.codeLensShowAuthor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show author information in CodeLens"
+        },
+        "gitpilot.editor.codeLensShowDate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show last modified date in CodeLens"
+        },
+        "gitpilot.editor.codeLensShowCommitMessage": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show commit message in CodeLens"
+        },
+        "gitpilot.editor.decorationUpdateDelay": {
+          "type": "number",
+          "default": 500,
+          "description": "Delay in milliseconds before updating gutter decorations after text changes"
+        },
+        "gitpilot.editor.permalinkStyle": {
+          "type": "string",
+          "enum": ["github", "gitlab", "bitbucket", "auto"],
+          "default": "auto",
+          "description": "Style of permalink to generate (auto-detects from remote URL)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
+    "build": "tsc -p .",
+    "typecheck": "tsc -p . --noEmit",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.33.0",
+    "jest": "^30.0.5",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4",
+    "typescript": "^5.3.0",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "simple-git": "^3.28.0"
+  }
+}
